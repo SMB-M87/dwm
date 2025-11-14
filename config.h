@@ -73,6 +73,8 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *upbrightness[]   = { "brightnessctl", "set", "5+", NULL };
 static const char *downbrightness[] = { "brightnessctl", "set", "5-", NULL };
 static const char *slockcmd[] = { "slock", NULL };
+static const char *upkbdbrightness[] = { "brightnessctl", "-d", "smc::kbd_backlight", "set", "5%+", NULL };
+static const char *downkbdbrightness[] = { "brightnessctl", "-d", "smc::kbd_backlight", "set", "5%-", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -115,7 +117,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ 0,            XF86XK_MonBrightnessUp,    spawn,          {.v = upbrightness } },
 	{ 0,            XF86XK_MonBrightnessDown,  spawn,          {.v = downbrightness } },
-	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = slockcmd } }
+	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = slockcmd } },
+	{ 0,            XF86XK_KbdBrightnessUp,    spawn,          {.v = upkbdbrightness } },
+	{ 0,            XF86XK_KbdBrightnessDown,  spawn,          {.v = downkbdbrightness } },
 };
 
 /* button definitions */
