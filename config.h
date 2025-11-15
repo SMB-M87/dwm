@@ -69,12 +69,24 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+
 static const char *termcmd[]  = { "st", NULL };
+
 static const char *upbrightness[]   = { "brightnessctl", "set", "5+", NULL };
 static const char *downbrightness[] = { "brightnessctl", "set", "5-", NULL };
+
 static const char *slockcmd[] = { "slock", NULL };
+
 static const char *upkbdbrightness[] = { "brightnessctl", "-d", "smc::kbd_backlight", "set", "5%+", NULL };
 static const char *downkbdbrightness[] = { "brightnessctl", "-d", "smc::kbd_backlight", "set", "5%-", NULL };
+
+static const char *volup[]     = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
+static const char *voldown[]   = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
+static const char *volmute[]   = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+
+static const char *playpause[] = { "playerctl", "play-pause", NULL };
+static const char *nexttrack[] = { "playerctl", "next", NULL };
+static const char *prevtrack[] = { "playerctl", "previous", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -115,11 +127,26 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+
+	// Screen Backlight
 	{ 0,            XF86XK_MonBrightnessUp,    spawn,          {.v = upbrightness } },
 	{ 0,            XF86XK_MonBrightnessDown,  spawn,          {.v = downbrightness } },
+
+	// Lockscreen
 	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = slockcmd } },
+
+	// Keyboard Backlight
 	{ 0,            XF86XK_KbdBrightnessUp,    spawn,          {.v = upkbdbrightness } },
 	{ 0,            XF86XK_KbdBrightnessDown,  spawn,          {.v = downkbdbrightness } },
+
+	// Audio keys
+	{ 0, XF86XK_AudioRaiseVolume,   spawn, {.v = volup } },
+	{ 0, XF86XK_AudioLowerVolume,   spawn, {.v = voldown } },
+	{ 0, XF86XK_AudioMute,          spawn, {.v = volmute } },
+	{ 0, XF86XK_AudioPlay,          spawn, {.v = playpause } },
+	{ 0, XF86XK_AudioNext,          spawn, {.v = nexttrack } },
+	{ 0, XF86XK_AudioPrev,          spawn, {.v = prevtrack } },
+
 };
 
 /* button definitions */
