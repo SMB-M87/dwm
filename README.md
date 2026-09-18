@@ -1,30 +1,41 @@
-# dwm
-Suckless Dynamic Window Manager
+# Dynamic Window Manager
+See the original dwm [README](./README).
 
-git clone https://git.suckless.org/dwm
+# Setup
+	# Clone
+	git clone https://git.suckless.org/dwm
+	cd ../dwm
 
-cd ../dwm
+	# Patches
+	# Toggle fullscreen for a window
+	curl -O https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff
+	
+	# Allows control of brightness by using the dedicated keys
+	curl -O https://dwm.suckless.org/patches/backlight/dwm-backlight-20241021-351084d.diff
 
-## Patches
-curl -O https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff
+	# Adds spiral and dwindle window-tiling
+	curl -O https://dwm.suckless.org/patches/fibonacci/dwm-fibonacci-20200418-c82db69.diff
 
-curl -O https://dwm.suckless.org/patches/backlight/dwm-backlight-20241021-351084d.diff
+	# Allows translucent bars
+	curl -O https://dwm.suckless.org/patches/alpha/dwm-alpha-20230401-348f655.diff
 
-curl -O https://dwm.suckless.org/patches/fibonacci/dwm-fibonacci-20200418-c82db69.diff
+	# Apply patches
+	patch -p1 < patches/dwm-actualfullscreen-20211013-cb3f58a.diff
+	patch -p1 < patches/dwm-backlight-20241021-351084d.diff
+	patch -p1 < patches/dwm-fibonacci-20200418-c82db69.diff
+	patch -p1 < patches/dwm-alpha-20230401-348f655.diff
 
-curl -O https://dwm.suckless.org/patches/alpha/dwm-alpha-20230401-348f655.diff
+	# Change patched config definitions
+	nvim config.def.h
 
-## Build
-patch -p1 < patches/dwm-actualfullscreen-20211013-cb3f58a.diff
+	# Copy row
+	{ MODKEY,                       XK_b,      togglebar,      		  {0} },	
+	# Change togglebar function with new fullscreen function
+	{ MODKEY,                       XK_b,      togglebarfullscr,      {0} },
+	
+	# Replace up/downbrightness xbacklight by brightnessctl
+	static const char *upbrightness[]   = { "brightnessctl", "set", "5+", NULL };
+	static const char *downbrightness[] = { "brightnessctl", "set", "5-", NULL };
 
-patch -p1 < patches/dwm-backlight-20241021-351084d.diff
-
-patch -p1 < patches/dwm-fibonacci-20200418-c82db69.diff
-
-patch -p1 < patches/dwm-alpha-20230401-348f655.diff
-
-nvim config.def.h
-
-	copy modkey togglebar and replace it with togglefullscr
-  
-	up/down brightness > replace xbacklight with brightnessctl set 5+/- (xev to get keyboard inputs)
+	# Update changes
+	make clean install
