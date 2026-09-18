@@ -30,7 +30,7 @@ See the original dwm [README](./README).
 
 	# Copy row
 	{ MODKEY,                       XK_b,      togglebar,      		  {0} },	
-	# Change togglebar function with new fullscreen function
+	# Replace togglebar function with new fullscreen function in copied row
 	{ MODKEY,                       XK_b,      togglebarfullscr,      {0} },
 	
 	# Replace up/downbrightness xbacklight by brightnessctl
